@@ -12,26 +12,23 @@ class ViewController: UIViewController {
     @IBOutlet private weak var slider: UISlider!
     @IBOutlet private weak var questionValueLabel: UILabel!
     private var questionValue = 0
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        slider.value = slider.maximumValue / 2
-        questionValue = Int.random(in: 1...100)
-        questionValueLabel.text = String(questionValue)
+
+        reset()
     }
     
     @IBAction func judgementButton(_ sender: UIButton) {
         
-        let num1 = Int(questionValueLabel.text ?? "") ?? 0
-        let num2 = Int(slider.value)
-        if num1 == num2{
-            showAlert(message:"あたり!\nあなたの値:\(num2)")
-        }else if num1 != num2{
-            showAlert(message:"はずれ!\nあなたの値:\(num2)")
+        let sliderValue = Int(slider.value)
+        if questionValue == sliderValue {
+            showAlert(message:"あたり!\nあなたの値:\(sliderValue)")
+        } else {
+            showAlert(message:"はずれ!\nあなたの値:\(sliderValue)")
         }
-        questionValue = Int.random(in: 1...100)
-        questionValueLabel.text = String(questionValue)
-        slider.value = slider.maximumValue / 2
+
+        reset()
     }
     
     func showAlert(message:String){
@@ -41,6 +38,11 @@ class ViewController: UIViewController {
         present(alert, animated: true, completion: nil)
         
     }
-    
+
+    private func reset() {
+        questionValue = Int.random(in: 1...100)
+        questionValueLabel.text = String(questionValue)
+        slider.value = 50
+    }
 }
 
